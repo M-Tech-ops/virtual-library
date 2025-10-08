@@ -99,14 +99,18 @@
 
     <!-- Bottom Controls -->
     <footer class="flex items-center justify-center py-6 bg-gray-800">
-        <button class="px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition flex items-center space-x-2">
+        <button id="leaveBtn" class="px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition flex items-center space-x-2">
             <i data-feather="phone-off" class="w-5 h-5"></i>
             <span>Leave</span>
         </button>
     </footer>
-
     <script>
         feather.replace();
+
+        // Leave button redirects to study-room.html
+        document.getElementById('leaveBtn').addEventListener('click', function() {
+            window.location.href = 'study-room.html';
+        });
 
         // Mic and Cam toggle logic for each person
         function setupControls(idx) {

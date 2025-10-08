@@ -86,12 +86,15 @@
             <div class="flex-1 overflow-y-auto py-4">
                 <nav>
                     <ul class="space-y-1 px-2">
+                        <!-- Removed Dashboard -->
+                        <!--
                         <li>
                             <a href="index.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
                                 <i data-feather="home" class="w-5 h-5 text-gray-600"></i>
                                 <span class="hidden md:block ml-3">Dashboard</span>
                             </a>
                         </li>
+                        -->
                         <li>
                             <a href="courses.html" class="nav-item active flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
                                 <i data-feather="book" class="w-5 h-5 text-primary-600"></i>
@@ -99,7 +102,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                            <a href="library.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
                                 <i data-feather="book-open" class="w-5 h-5 text-gray-600"></i>
                                 <span class="hidden md:block ml-3">Library</span>
                             </a>
@@ -144,21 +147,20 @@
         <!-- Main Content -->
         <div class="flex-1 overflow-y-auto">
             <!-- Top Bar -->
-            <header class="bg-white shadow-sm">
+            <header class="bg-white shadow-sm dark:bg-slate-800">
                 <div class="px-6 py-4 flex items-center justify-between">
                     <!-- Search Bar -->
                     <div class="relative w-full max-w-md">
                         <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" placeholder="Search courses, materials..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        <input type="text" placeholder="Search courses, materials..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-slate-900 dark:text-slate-200">
                     </div>
-                    
                     <!-- Right Side Icons -->
                     <div class="flex items-center space-x-4">
-                        <button class="p-2 rounded-full hover:bg-gray-100">
-                            <i data-feather="bell" class="w-5 h-5 text-gray-600"></i>
+                        <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700" id="darkModeBtn">
+                            <i data-feather="moon" class="w-5 h-5 text-gray-600 dark:text-slate-300"></i>
                         </button>
                         <button class="p-2 rounded-full hover:bg-gray-100">
-                            <i data-feather="moon" class="w-5 h-5 text-gray-600"></i>
+                            <i data-feather="bell" class="w-5 h-5 text-gray-600"></i>
                         </button>
                         <button class="hidden md:block px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg shadow-sm hover:opacity-90 transition">
                             Join Course
@@ -404,19 +406,34 @@
     <script>
         // Initialize Feather Icons
         feather.replace();
-        
+
+        // Dark mode toggle
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const html = document.documentElement;
+        darkModeBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        // On load, set theme from localStorage or system preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
         // Simple animation for cards on page load
         document.addEventListener('DOMContentLoaded', () => {
-            anime.timeline({
-                easing: 'easeOutExpo',
-            })
-            .add({
-                targets: '.course-card',
-                opacity: [0, 1],
-                translateY: [20, 0],
-                duration: 800,
-                delay: anime.stagger(100)
-            });
+            feather.replace();
+            if (window.anime) {
+                anime.timeline({
+                    easing: 'easeOutExpo',
+                })
+                .add({
+                    targets: '.course-card',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 800,
+                    delay: anime.stagger(100)
+                });
+            }
         });
     </script>
 </body>
