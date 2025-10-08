@@ -489,6 +489,34 @@
                 clearInterval(timer);
             }
         });
+        // ...existing code...
+
+// Add Note functionality
+const notesContainer = document.querySelector('.h-40.overflow-y-auto.mb-3');
+const noteInput = document.querySelector('input[placeholder="Add a note..."]');
+const sendButton = noteInput.nextElementSibling;
+
+function addNote() {
+    const noteText = noteInput.value.trim();
+    if (noteText) {
+        const now = new Date();
+        const timeStr = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`;
+        const user = "Alex"; // Replace with dynamic user if needed
+        const noteElem = document.createElement('p');
+        noteElem.className = "text-gray-600 dark:text-slate-400";
+        noteElem.textContent = `${timeStr} ${user}: ${noteText}`;
+        notesContainer.appendChild(noteElem);
+        notesContainer.scrollTop = notesContainer.scrollHeight;
+        noteInput.value = '';
+    }
+}
+
+sendButton.addEventListener('click', addNote);
+noteInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') addNote();
+});
+
+// ...existing code...
     </script>
 </body>
 </html>
