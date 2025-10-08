@@ -489,34 +489,76 @@
                 clearInterval(timer);
             }
         });
-        // ...existing code...
-
-// Add Note functionality
-const notesContainer = document.querySelector('.h-40.overflow-y-auto.mb-3');
-const noteInput = document.querySelector('input[placeholder="Add a note..."]');
-const sendButton = noteInput.nextElementSibling;
-
-function addNote() {
-    const noteText = noteInput.value.trim();
-    if (noteText) {
-        const now = new Date();
-        const timeStr = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`;
-        const user = "Alex"; // Replace with dynamic user if needed
-        const noteElem = document.createElement('p');
-        noteElem.className = "text-gray-600 dark:text-slate-400";
-        noteElem.textContent = `${timeStr} ${user}: ${noteText}`;
-        notesContainer.appendChild(noteElem);
-        notesContainer.scrollTop = notesContainer.scrollHeight;
-        noteInput.value = '';
-    }
-}
-
-sendButton.addEventListener('click', addNote);
-noteInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') addNote();
-});
-
-// ...existing code...
+        
+        // Pomodoro Timer: Add Reset functionality
+        const resetButton = document.querySelector('.pomodoro-timer button:nth-child(2)');
+        function resetTimer() {
+            minutes = 25;
+            seconds = 0;
+            updateDisplay();
+            startButton.textContent = 'Start';
+            clearInterval(timer);
+        }
+        resetButton.addEventListener('click', resetTimer);
+        
+        // "Create Room" button: Show alert (since it would normally lead to another page)
+        const createRoomBtn = document.querySelector('button.bg-gradient-to-r');
+        if (createRoomBtn) {
+            createRoomBtn.addEventListener('click', () => {
+                alert('Room creation coming soon!');
+            });
+        }
+        
+        // "Invite" button: Show alert (since it would normally lead to another page)
+        const inviteBtn = document.querySelector('.text-sm.text-primary-600');
+        if (inviteBtn) {
+            inviteBtn.addEventListener('click', () => {
+                alert('Invite feature coming soon!');
+            });
+        }
+        
+        // "Share" button in motivational section: Show alert
+        const shareBtn = document.querySelector('.bg-white.bg-opacity-20.rounded-lg');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                alert('Share your streak soon!');
+            });
+        }
+        
+        // "View All" button: Show alert (since it would normally lead to another page)
+        const viewAllBtn = document.querySelector('button.text-sm.text-primary-600');
+        if (viewAllBtn) {
+            viewAllBtn.addEventListener('click', () => {
+                alert('Viewing all rooms coming soon!');
+            });
+        }
+        
+        // "Join" buttons: Leave as is (they likely lead to other pages)
+        
+        // Add Note functionality
+        const notesContainer = document.querySelector('.h-40.overflow-y-auto.mb-3');
+        const noteInput = document.querySelector('input[placeholder="Add a note..."]');
+        const sendButton = noteInput.nextElementSibling;
+        
+        function addNote() {
+            const noteText = noteInput.value.trim();
+            if (noteText) {
+                const now = new Date();
+                const timeStr = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`;
+                const user = "Alex"; // Replace with dynamic user if needed
+                const noteElem = document.createElement('p');
+                noteElem.className = "text-gray-600 dark:text-slate-400";
+                noteElem.textContent = `${timeStr} ${user}: ${noteText}`;
+                notesContainer.appendChild(noteElem);
+                notesContainer.scrollTop = notesContainer.scrollHeight;
+                noteInput.value = '';
+            }
+        }
+        
+        sendButton.addEventListener('click', addNote);
+        noteInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') addNote();
+        });
     </script>
 </body>
 </html>
