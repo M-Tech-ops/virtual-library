@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Rooms | EduSync</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            background-color: rgba(14, 165, 233, 0.1);
+            border-left: 3px solid #0ea5e9;
+        }
+        .study-room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .dark .study-room-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .streak-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        .streak-dot.active {
+            background-color: #0ea5e9;
+        }
+        .streak-dot.inactive {
+            background-color: #e2e8f0;
+        }
+        .dark .streak-dot.inactive {
+            background-color: #334155;
+        }
+        .pomodoro-timer {
+            transition: all 0.3s ease;
+        }
+        .dark .bg-gray-50 {
+            background-color: #1e293b;
+        }
+        .dark .bg-white {
+            background-color: #0f172a;
+        }
+        .dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        .dark .text-gray-600 {
+            color: #94a3b8;
+        }
+        .dark .border-gray-100 {
+            border-color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-slate-900 dark:text-slate-200 transition-colors duration-200">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar w-20 md:w-64 bg-white dark:bg-slate-800 shadow-lg flex flex-col">
+            <!-- Logo -->
+            <div class="p-4 flex items-center justify-center md:justify-start border-b border-gray-100 dark:border-slate-700">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-xl">ES</div>
+                <span class="hidden md:block ml-3 text-xl font-bold text-primary-800 dark:text-primary-300">EduSync</span>
+            </div>
+            
+            <!-- Navigation Items -->
+            <div class="flex-1 overflow-y-auto py-4">
+                <nav>
+                    <ul class="space-y-1 px-2">
+                        <li>
+                            <a href="index.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="home" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                                <span class="hidden md:block ml-3">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="courses.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="book" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                                <span class="hidden md:block ml-3">Courses</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="library.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="book-open" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                                <span class="hidden md:block ml-3">Library</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="collaboration.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="message-square" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                                <span class="hidden md:block ml-3">Collaboration</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="study-rooms.html" class="nav-item active flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="users" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                                <span class="hidden md:block ml-3">Study Rooms</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                                <i data-feather="calendar" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                                <span class="hidden md:block ml-3">Calendar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-100 dark:border-slate-700 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-600 overflow-hidden">
+                    <img src="http://static.photos/people/200x200/42" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <div class="hidden md:block ml-3">
+                    <div class="font-medium dark:text-slate-200">Alex Johnson</div>
+                    <div class="text-xs text-gray-500 dark:text-slate-400">Student</div>
+                </div>
+                <button class="hidden md:block ml-auto text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200">
+                    <i data-feather="settings" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Top Bar -->
+            <header class="bg-white dark:bg-slate-800 shadow-sm">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <!-- Search Bar -->
+                    <div class="relative w-full max-w-md">
+                        <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-slate-500"></i>
+                        <input type="text" placeholder="Search study rooms..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-slate-600 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                    
+                    <!-- Right Side Icons -->
+                    <div class="flex items-center space-x-4">
+                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition">
+                            <i data-feather="moon" class="w-5 h-5 text-gray-600 dark:hidden"></i>
+                            <i data-feather="sun" class="w-5 h-5 text-yellow-400 hidden dark:block"></i>
+                        </button>
+                        <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 relative">
+                            <i data-feather="bell" class="w-5 h-5 text-gray-600 dark:text-slate-400"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-500"></span>
+                        </button>
+                        <button class="hidden md:block px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg shadow-sm hover:opacity-90 transition">
+                            Create Room
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Study Rooms Content -->
+            <main class="p-6">
+                <!-- Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800 dark:text-slate-200">Study Rooms</h1>
+                    <p class="text-gray-600 dark:text-slate-400">Join or create focused study sessions with classmates</p>
+                </div>
+                
+                <!-- Current Study Session -->
+                <div class="mb-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-slate-200">Your Current Session</h2>
+                        <div class="flex items-center text-sm text-green-600 dark:text-green-400">
+                            <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                            <span>3 members active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Pomodoro Timer -->
+                        <div class="p-4 border border-gray-100 dark:border-slate-700 rounded-lg">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-medium">Focus Timer</h3>
+                                <span class="text-xs px-2 py-1 rounded-full bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200">Pomodoro</span>
+                            </div>
+                            
+                            <div class="pomodoro-timer text-center py-4">
+                                <div class="text-4xl font-bold mb-4">25:00</div>
+                                <div class="flex justify-center space-x-3">
+                                    <button class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">
+                                        Start
+                                    </button>
+                                    <button class="px-4 py-2 bg-gray-100 dark:bg-slate-700 text-gray-800 dark:text-slate-200 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition">
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-slate-700">
+                                <div class="text-sm text-gray-600 dark:text-slate-400 mb-2">Today's Focus</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="streak-dot active"></span>
+                                    <span class="streak-dot active"></span>
+                                    <span class="streak-dot active"></span>
+                                    <span class="streak-dot inactive"></span>
+                                    <span class="streak-dot inactive"></span>
+                                    <span class="text-sm ml-2">3/5 completed</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shared Notes -->
+                        <div class="p-4 border border-gray-100 dark:border-slate-700 rounded-lg">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-medium">Shared Notes</h3>
+                                <div class="flex items-center text-sm text-gray-500 dark:text-slate-400">
+                                    <i data-feather="edit-2" class="w-4 h-4 mr-1"></i>
+                                    <span>3 editing</span>
+                                </div>
+                            </div>
+                            
+                            <div class="h-40 overflow-y-auto mb-3 text-sm">
+                                <p class="text-gray-600 dark:text-slate-400">[10:15] Alex: Let's focus on chapter 5 today</p>
+                                <p class="text-gray-600 dark:text-slate-400">[10:20] Sarah: I'll take notes on the key concepts</p>
+                                <p class="text-gray-600 dark:text-slate-400">[10:22] Michael: I found some helpful diagrams</p>
+                            </div>
+                            
+                            <div class="relative">
+                                <input type="text" placeholder="Add a note..." class="w-full pl-3 pr-10 py-2 rounded-lg border border-gray-200 dark:border-slate-600 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                <button class="absolute right-3 top-2 text-gray-500 dark:text-slate-400 hover:text-primary-500 transition">
+                                    <i data-feather="send" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Room Members -->
+                        <div class="p-4 border border-gray-100 dark:border-slate-700 rounded-lg">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-medium">Room Members</h3>
+                                <button class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition">
+                                    Invite
+                                </button>
+                            </div>
+                            
+                            <ul class="space-y-3">
+                                <li class="flex items-center">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-600 overflow-hidden">
+                                            <img src="http://static.photos/people/200x200/44" alt="Profile" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-white dark:border-slate-800"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium">Sarah Chen</div>
+                                        <div class="text-xs text-gray-500 dark:text-slate-400">Studying: Data Structures</div>
+                                    </div>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-600 overflow-hidden">
+                                            <img src="http://static.photos/people/200x200/45" alt="Profile" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-white dark:border-slate-800"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium">Michael R.</div>
+                                        <div class="text-xs text-gray-500 dark:text-slate-400">Studying: Algorithms</div>
+                                    </div>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-600 overflow-hidden">
+                                            <img src="http://static.photos/people/200x200/42" alt="Profile" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-white dark:border-slate-800"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium">Alex Johnson</div>
+                                        <div class="text-xs text-gray-500 dark:text-slate-400">Studying: Literature</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Available Rooms -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-slate-200">Available Study Rooms</h2>
+                        <button class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition">
+                            View All
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Room 1 -->
+                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center">
+                                    <i data-feather="cpu" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium">Computer Science</h3>
+                                    <p class="text-sm text-gray-500 dark:text-slate-400">5 members · 3 active</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Working on Data Structures assignment #3</p>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                    <i data-feather="users" class="w-3 h-3 mr-1"></i> Active
+                                </span>
+                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
+                                    Join
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Room 2 -->
+                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 flex items-center justify-center">
+                                    <i data-feather="book" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium">Literature Club</h3>
+                                    <p class="text-sm text-gray-500 dark:text-slate-400">8 members · 2 active</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Discussing Modernist Poetry analysis</p>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                    <i data-feather="clock" class="w-3 h-3 mr-1"></i> Starting soon
+                                </span>
+                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
+                                    Join
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Room 3 -->
+                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 flex items-center justify-center">
+                                    <i data-feather="code" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="font-medium">Coding Challenge</h3>
+                                    <p class="text-sm text-gray-500 dark:text-slate-400">12 members · 6 active</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Weekly coding problems and solutions</p>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                    <i data-feather="users" class="w-3 h-3 mr-1"></i> Active
+                                </span>
+                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
+                                    Join
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Motivational Section -->
+                <div class="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl shadow-sm p-6 text-white">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-lg bg-white bg-opacity-20 mr-4">
+                            <i data-feather="award" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">Study Streak: 7 days!</h3>
+                            <p class="text-white text-opacity-80">Keep up the good work. You're building great habits!</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="flex space-x-1">
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                            <span class="streak-dot active bg-white"></span>
+                        </div>
+                        <button class="text-sm px-3 py-1 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+        
+        // Simple Pomodoro timer logic
+        const timerDisplay = document.querySelector('.pomodoro-timer div');
+        const startButton = document.querySelector('.pomodoro-timer button');
+        
+        let minutes = 25;
+        let seconds = 0;
+        let timer;
+        
+        function updateDisplay() {
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        startButton.addEventListener('click', function() {
+            if (this.textContent === 'Start') {
+                this.textContent = 'Pause';
+                timer = setInterval(() => {
+                    if (seconds === 0) {
+                        if (minutes === 0) {
+                            clearInterval(timer);
+                            // Timer completed
+                            return;
+                        }
+                        minutes--;
+                        seconds = 59;
+                    } else {
+                        seconds--;
+                    }
+                    updateDisplay();
+                }, 1000);
+            } else {
+                this.textContent = 'Start';
+                clearInterval(timer);
+            }
+        });
+    </script>
+</body>
+</html>

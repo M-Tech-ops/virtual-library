@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | EduSync</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .nav-item.active {
+            background-color: rgba(14, 165, 233, 0.1);
+            border-left: 3px solid #0ea5e9;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.5s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar w-20 md:w-64 bg-white shadow-lg flex flex-col">
+            <!-- Logo -->
+            <div class="p-4 flex items-center justify-center md:justify-start border-b border-gray-100">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-xl">ES</div>
+                <span class="hidden md:block ml-3 text-xl font-bold text-primary-800">EduSync</span>
+            </div>
+            
+            <!-- Navigation Items -->
+            <div class="flex-1 overflow-y-auto py-4">
+                <nav>
+                    <ul class="space-y-1 px-2">
+                        <li>
+                            <a href="index.html" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="home" class="w-5 h-5 text-gray-600"></i>
+                                <span class="hidden md:block ml-3">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="courses.html" class="nav-item active flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="book" class="w-5 h-5 text-primary-600"></i>
+                                <span class="hidden md:block ml-3">Courses</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="book-open" class="w-5 h-5 text-gray-600"></i>
+                                <span class="hidden md:block ml-3">Library</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="message-square" class="w-5 h-5 text-gray-600"></i>
+                                <span class="hidden md:block ml-3">Collaboration</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="calendar" class="w-5 h-5 text-gray-600"></i>
+                                <span class="hidden md:block ml-3">Calendar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
+                                <i data-feather="users" class="w-5 h-5 text-gray-600"></i>
+                                <span class="hidden md:block ml-3">Study Rooms</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-100 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                    <img src="http://static.photos/people/200x200/42" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <div class="hidden md:block ml-3">
+                    <div class="font-medium">Alex Johnson</div>
+                    <div class="text-xs text-gray-500">Student</div>
+                </div>
+                <button class="hidden md:block ml-auto text-gray-500 hover:text-gray-700">
+                    <i data-feather="settings" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Top Bar -->
+            <header class="bg-white shadow-sm">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <!-- Search Bar -->
+                    <div class="relative w-full max-w-md">
+                        <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search courses, materials..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                    
+                    <!-- Right Side Icons -->
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <i data-feather="bell" class="w-5 h-5 text-gray-600"></i>
+                        </button>
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <i data-feather="moon" class="w-5 h-5 text-gray-600"></i>
+                        </button>
+                        <button class="hidden md:block px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg shadow-sm hover:opacity-90 transition">
+                            Join Course
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Courses Content -->
+            <main class="p-6">
+                <!-- Header -->
+                <div class="mb-8 flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">My Courses</h1>
+                        <p class="text-gray-600">Manage and access your learning materials</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition flex items-center">
+                            <i data-feather="filter" class="w-4 h-4 mr-2"></i>
+                            <span>Filter</span>
+                        </button>
+                        <button class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition flex items-center">
+                            <i data-feather="calendar" class="w-4 h-4 mr-2"></i>
+                            <span>Sort</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Courses Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Card 1 -->
+                    <div class="course-card bg-white rounded-xl shadow-sm p-6 transition hover:shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="http://static.photos/education/200x200/4" alt="Course" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative">
+                                <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle class="progress-ring__circle" cx="18" cy="18" r="16" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="30"></circle>
+                                    <text x="18" y="20" text-anchor="middle" font-size="10" fill="#0ea5e9" font-weight="bold">70%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2">Data Structures</h2>
+                        <p class="text-gray-600 text-sm mb-4">Prof. Anderson · Computer Science</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="book-open" class="w-4 h-4 mr-1"></i>
+                                <span>12 Modules</span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                                <span>24 Students</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+                                    <img src="http://static.photos/people/200x200/43" alt="Professor" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <p class="font-medium">New: Lecture 8 Posted</p>
+                                    <p class="text-gray-500">2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 2 -->
+                    <div class="course-card bg-white rounded-xl shadow-sm p-6 transition hover:shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="http://static.photos/education/200x200/5" alt="Course" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative">
+                                <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle class="progress-ring__circle" cx="18" cy="18" r="16" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="60"></circle>
+                                    <text x="18" y="20" text-anchor="middle" font-size="10" fill="#0ea5e9" font-weight="bold">40%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2">Algorithms</h2>
+                        <p class="text-gray-600 text-sm mb-4">Prof. Chen · Computer Science</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="book-open" class="w-4 h-4 mr-1"></i>
+                                <span>10 Modules</span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                                <span>18 Students</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+                                    <img src="http://static.photos/people/200x200/44" alt="Professor" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <p class="font-medium">Assignment Due: May 20</p>
+                                    <p class="text-gray-500">1 day ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 3 -->
+                    <div class="course-card bg-white rounded-xl shadow-sm p-6 transition hover:shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="http://static.photos/education/200x200/6" alt="Course" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative">
+                                <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle class="progress-ring__circle" cx="18" cy="18" r="16" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="15"></circle>
+                                    <text x="18" y="20" text-anchor="middle" font-size="10" fill="#0ea5e9" font-weight="bold">85%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2">Advanced Literature</h2>
+                        <p class="text-gray-600 text-sm mb-4">Prof. Williams · Humanities</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="book-open" class="w-4 h-4 mr-1"></i>
+                                <span>8 Modules</span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                                <span>15 Students</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+                                    <img src="http://static.photos/people/200x200/45" alt="Professor" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <p class="font-medium">Research Paper Feedback</p>
+                                    <p class="text-gray-500">3 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 4 -->
+                    <div class="course-card bg-white rounded-xl shadow-sm p-6 transition hover:shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="http://static.photos/education/200x200/7" alt="Course" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative">
+                                <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle class="progress-ring__circle" cx="18" cy="18" r="16" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="50"></circle>
+                                    <text x="18" y="20" text-anchor="middle" font-size="10" fill="#0ea5e9" font-weight="bold">50%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2">Machine Learning</h2>
+                        <p class="text-gray-600 text-sm mb-4">Prof. Rodriguez · Computer Science</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="book-open" class="w-4 h-4 mr-1"></i>
+                                <span>14 Modules</span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                                <span>22 Students</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+                                    <img src="http://static.photos/people/200x200/46" alt="Professor" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <p class="font-medium">Project Groups Assigned</p>
+                                    <p class="text-gray-500">Yesterday</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 5 -->
+                    <div class="course-card bg-white rounded-xl shadow-sm p-6 transition hover:shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="http://static.photos/education/200x200/8" alt="Course" class="w-full h-full object-cover">
+                            </div>
+                            <div class="relative">
+                                <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle class="progress-ring__circle" cx="18" cy="18" r="16" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="40"></circle>
+                                    <text x="18" y="20" text-anchor="middle" font-size="10" fill="#0ea5e9" font-weight="bold">60%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2">Modern History</h2>
+                        <p class="text-gray-600 text-sm mb-4">Prof. Bennett · Humanities</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="book-open" class="w-4 h-4 mr-1"></i>
+                                <span>6 Modules</span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i data-feather="users" class="w-4 h-4 mr-1"></i>
+                                <span>12 Students</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
+                                    <img src="http://static.photos/people/200x200/47" alt="Professor" class="w-full h-full object-cover">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <p class="font-medium">Reading List Updated</p>
+                                    <p class="text-gray-500">5 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add New Course Card -->
+                    <div class="course-card bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl shadow-sm p-6 transition hover:shadow-md flex flex-col items-center justify-center border-2 border-dashed border-primary-200">
+                        <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4">
+                            <i data-feather="plus" class="w-8 h-8 text-primary-600"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2 text-primary-800">Join New Course</h2>
+                        <p class="text-gray-600 text-sm mb-4 text-center">Enter a course code or browse available courses</p>
+                        <button class="px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg shadow-sm hover:opacity-90 transition">
+                            Explore Courses
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Simple animation for cards on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            anime.timeline({
+                easing: 'easeOutExpo',
+            })
+            .add({
+                targets: '.course-card',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 800,
+                delay: anime.stagger(100)
+            });
+        });
+    </script>
+</body>
+</html>
