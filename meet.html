@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduSync Meet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .video-box {
+            background: #1e293b;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .video-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 9999px;
+            object-fit: cover;
+            border: 3px solid #0ea5e9;
+        }
+        .video-name {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .video-off {
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between px-6 py-4 bg-gray-800 shadow">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-xl">ES</div>
+            <span class="text-xl font-bold text-primary-300">EduSync Meet</span>
+        </div>
+        <span class="text-gray-300">Meeting Room: Study Group</span>
+    </header>
+
+    <!-- Video Grid -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl mt-8">
+            <!-- Person 1 -->
+            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video1">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alex" class="video-avatar" id="avatar1">
+                <span class="video-name">Alex (You)</span>
+                <div class="absolute top-3 right-3 flex space-x-2">
+                    <button id="micBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="mic" class="w-5 h-5"></i>
+                    </button>
+                    <button id="camBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="video" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Person 2 -->
+            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video2">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah" class="video-avatar" id="avatar2">
+                <span class="video-name">Sarah</span>
+                <div class="absolute top-3 right-3 flex space-x-2">
+                    <button id="micBtn2" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="mic" class="w-5 h-5"></i>
+                    </button>
+                    <button id="camBtn2" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="video" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Person 3 -->
+            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video3">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael" class="video-avatar" id="avatar3">
+                <span class="video-name">Michael</span>
+                <div class="absolute top-3 right-3 flex space-x-2">
+                    <button id="micBtn3" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="mic" class="w-5 h-5"></i>
+                    </button>
+                    <button id="camBtn3" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                        <i data-feather="video" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Controls -->
+    <footer class="flex items-center justify-center py-6 bg-gray-800">
+        <button class="px-6 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition flex items-center space-x-2">
+            <i data-feather="phone-off" class="w-5 h-5"></i>
+            <span>Leave</span>
+        </button>
+    </footer>
+
+    <script>
+        feather.replace();
+
+        // Mic and Cam toggle logic for each person
+        function setupControls(idx) {
+            const micBtn = document.getElementById(`micBtn${idx}`);
+            const camBtn = document.getElementById(`camBtn${idx}`);
+            const avatar = document.getElementById(`avatar${idx}`);
+            const videoBox = document.getElementById(`video${idx}`);
+
+            let micOn = true;
+            let camOn = true;
+
+            micBtn.addEventListener('click', () => {
+                micOn = !micOn;
+                micBtn.innerHTML = micOn
+                    ? '<i data-feather="mic" class="w-5 h-5"></i>'
+                    : '<i data-feather="mic-off" class="w-5 h-5 text-red-500"></i>';
+                feather.replace();
+            });
+
+            camBtn.addEventListener('click', () => {
+                camOn = !camOn;
+                camBtn.innerHTML = camOn
+                    ? '<i data-feather="video" class="w-5 h-5"></i>'
+                    : '<i data-feather="video-off" class="w-5 h-5 text-red-500"></i>';
+                feather.replace();
+                if (camOn) {
+                    avatar.style.display = '';
+                    videoBox.classList.remove('video-off');
+                    videoBox.innerHTML = `
+                        <img src="${avatar.src}" alt="" class="video-avatar" id="avatar${idx}">
+                        <span class="video-name">${videoBox.querySelector('.video-name').textContent}</span>
+                        <div class="absolute top-3 right-3 flex space-x-2">
+                            ${micBtn.outerHTML}
+                            ${camBtn.outerHTML}
+                        </div>
+                    `;
+                    feather.replace();
+                    setupControls(idx); // Re-attach events
+                } else {
+                    avatar.style.display = 'none';
+                    videoBox.classList.add('video-off');
+                    videoBox.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full w-full">
+                            <i data-feather="video-off" class="w-12 h-12 mb-2 text-red-500"></i>
+                            <span class="text-lg">Camera Off</span>
+                        </div>
+                        <span class="video-name">${videoBox.querySelector('.video-name').textContent}</span>
+                        <div class="absolute top-3 right-3 flex space-x-2">
+                            ${micBtn.outerHTML}
+                            ${camBtn.outerHTML}
+                        </div>
+                    `;
+                    feather.replace();
+                    setupControls(idx); // Re-attach events
+                }
+            });
+        }
+
+        setupControls(1);
+        setupControls(2);
+        setupControls(3);
+    </script>
+</body>
+</html>

@@ -332,77 +332,12 @@
                 <div class="mb-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl font-semibold text-gray-800 dark:text-slate-200">Available Study Rooms</h2>
-                        <button class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition">
+                        <button id="viewAllBtn" class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition">
                             View All
                         </button>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Room 1 -->
-                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center">
-                                    <i data-feather="cpu" class="w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h3 class="font-medium">Computer Science</h3>
-                                    <p class="text-sm text-gray-500 dark:text-slate-400">5 members · 3 active</p>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Working on Data Structures assignment #3</p>
-                            <div class="flex items-center justify-between">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-                                    <i data-feather="users" class="w-3 h-3 mr-1"></i> Active
-                                </span>
-                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
-                                    Join
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Room 2 -->
-                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 flex items-center justify-center">
-                                    <i data-feather="book" class="w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h3 class="font-medium">Literature Club</h3>
-                                    <p class="text-sm text-gray-500 dark:text-slate-400">8 members · 2 active</p>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Discussing Modernist Poetry analysis</p>
-                            <div class="flex items-center justify-between">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
-                                    <i data-feather="clock" class="w-3 h-3 mr-1"></i> Starting soon
-                                </span>
-                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
-                                    Join
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Room 3 -->
-                        <div class="study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 flex items-center justify-center">
-                                    <i data-feather="code" class="w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h3 class="font-medium">Coding Challenge</h3>
-                                    <p class="text-sm text-gray-500 dark:text-slate-400">12 members · 6 active</p>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">Weekly coding problems and solutions</p>
-                            <div class="flex items-center justify-between">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-                                    <i data-feather="users" class="w-3 h-3 mr-1"></i> Active
-                                </span>
-                                <button class="text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
-                                    Join
-                                </button>
-                            </div>
-                        </div>
+                    <div id="studyRoomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Initial rooms will be rendered by JS -->
                     </div>
                 </div>
                 
@@ -436,6 +371,27 @@
         </div>
     </div>
     
+    <!-- Create Room Modal -->
+    <div id="createRoomModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 w-full max-w-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-slate-200">Create a New Study Room</h2>
+            <form id="createRoomForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">Room Name</label>
+                    <input type="text" name="roomName" required class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-600 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">Description</label>
+                    <textarea name="roomDesc" rows="2" class="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-600 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" id="closeCreateRoom" class="px-4 py-2 bg-gray-100 dark:bg-slate-700 text-gray-800 dark:text-slate-200 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         // Initialize Feather Icons
@@ -455,18 +411,20 @@
             html.classList.add('dark');
         }
         
-        // Simple Pomodoro timer logic
+        // Pomodoro Timer: Add Reset functionality
+        const pomodoroButtons = document.querySelectorAll('.pomodoro-timer button');
+        const startButton = pomodoroButtons[0];
+        const resetButton = pomodoroButtons[1];
         const timerDisplay = document.querySelector('.pomodoro-timer div');
-        const startButton = document.querySelector('.pomodoro-timer button');
-        
+
         let minutes = 25;
         let seconds = 0;
         let timer;
-        
+
         function updateDisplay() {
             timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
-        
+
         startButton.addEventListener('click', function() {
             if (this.textContent === 'Start') {
                 this.textContent = 'Pause';
@@ -474,7 +432,6 @@
                     if (seconds === 0) {
                         if (minutes === 0) {
                             clearInterval(timer);
-                            // Timer completed
                             return;
                         }
                         minutes--;
@@ -489,52 +446,34 @@
                 clearInterval(timer);
             }
         });
-        
-        // Pomodoro Timer: Add Reset functionality
-        const resetButton = document.querySelector('.pomodoro-timer button:nth-child(2)');
-        function resetTimer() {
+
+        resetButton.addEventListener('click', function() {
             minutes = 25;
             seconds = 0;
             updateDisplay();
             startButton.textContent = 'Start';
             clearInterval(timer);
-        }
-        resetButton.addEventListener('click', resetTimer);
-        
-        // "Create Room" button: Show alert (since it would normally lead to another page)
+        });
+
+        // Create Room Modal logic
         const createRoomBtn = document.querySelector('button.bg-gradient-to-r');
+        const createRoomModal = document.getElementById('createRoomModal');
+        const closeCreateRoom = document.getElementById('closeCreateRoom');
+        const createRoomForm = document.getElementById('createRoomForm');
+
         if (createRoomBtn) {
             createRoomBtn.addEventListener('click', () => {
-                alert('Room creation coming soon!');
+                createRoomModal.classList.remove('hidden');
             });
         }
-        
-        // "Invite" button: Show alert (since it would normally lead to another page)
-        const inviteBtn = document.querySelector('.text-sm.text-primary-600');
-        if (inviteBtn) {
-            inviteBtn.addEventListener('click', () => {
-                alert('Invite feature coming soon!');
-            });
-        }
-        
-        // "Share" button in motivational section: Show alert
-        const shareBtn = document.querySelector('.bg-white.bg-opacity-20.rounded-lg');
-        if (shareBtn) {
-            shareBtn.addEventListener('click', () => {
-                alert('Share your streak soon!');
-            });
-        }
-        
-        // "View All" button: Show alert (since it would normally lead to another page)
-        const viewAllBtn = document.querySelector('button.text-sm.text-primary-600');
-        if (viewAllBtn) {
-            viewAllBtn.addEventListener('click', () => {
-                alert('Viewing all rooms coming soon!');
-            });
-        }
-        
-        // "Join" buttons: Leave as is (they likely lead to other pages)
-        
+        closeCreateRoom.addEventListener('click', () => {
+            createRoomModal.classList.add('hidden');
+        });
+        createRoomModal.addEventListener('click', (e) => {
+            if (e.target === createRoomModal) {
+                createRoomModal.classList.add('hidden');
+            }
+        });
         // Add Note functionality
         const notesContainer = document.querySelector('.h-40.overflow-y-auto.mb-3');
         const noteInput = document.querySelector('input[placeholder="Add a note..."]');
@@ -559,6 +498,180 @@
         noteInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') addNote();
         });
+        
+        // Study Rooms Data & Rendering
+        const initialRooms = [
+            {
+                name: "Computer Science",
+                members: "5 members · 3 active",
+                desc: "Working on Data Structures assignment #3",
+                status: "Active",
+                statusIcon: "users",
+                badgeBg: "bg-green-100 dark:bg-green-900",
+                badgeText: "text-green-800 dark:text-green-200",
+                icon: "cpu",
+                iconBg: "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300"
+            },
+            {
+                name: "Literature Club",
+                members: "8 members · 2 active",
+                desc: "Discussing Modernist Poetry analysis",
+                status: "Starting soon",
+                statusIcon: "clock",
+                badgeBg: "bg-yellow-100 dark:bg-yellow-900",
+                badgeText: "text-yellow-800 dark:text-yellow-200",
+                icon: "book",
+                iconBg: "bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300"
+            },
+            {
+                name: "Coding Challenge",
+                members: "12 members · 6 active",
+                desc: "Weekly coding problems and solutions",
+                status: "Active",
+                statusIcon: "users",
+                badgeBg: "bg-green-100 dark:bg-green-900",
+                badgeText: "text-green-800 dark:text-green-200",
+                icon: "code",
+                iconBg: "bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300"
+            }
+        ];
+
+        const moreRooms = [
+            {
+                name: "Math Study Group",
+                members: "7 members · 4 active",
+                desc: "Preparing for calculus midterm",
+                status: "Active",
+                statusIcon: "users",
+                badgeBg: "bg-green-100 dark:bg-green-900",
+                badgeText: "text-green-800 dark:text-green-200",
+                icon: "activity",
+                iconBg: "bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300"
+            },
+            {
+                name: "History Buffs",
+                members: "6 members · 1 active",
+                desc: "World War II discussion",
+                status: "Starting soon",
+                statusIcon: "clock",
+                badgeBg: "bg-yellow-100 dark:bg-yellow-900",
+                badgeText: "text-yellow-800 dark:text-yellow-200",
+                icon: "archive",
+                iconBg: "bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300"
+            },
+            {
+                name: "Physics Lab",
+                members: "9 members · 5 active",
+                desc: "Lab report collaboration",
+                status: "Active",
+                statusIcon: "users",
+                badgeBg: "bg-green-100 dark:bg-green-900",
+                badgeText: "text-green-800 dark:text-green-200",
+                icon: "zap",
+                iconBg: "bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300"
+            }
+        ];
+
+        let rooms = [...initialRooms];
+        let allRoomsShown = false;
+
+        function renderRooms() {
+            const grid = document.getElementById('studyRoomsGrid');
+            grid.innerHTML = '';
+            rooms.forEach(room => {
+                const roomDiv = document.createElement('div');
+                roomDiv.className = "study-room-card bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 transition";
+                roomDiv.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg ${room.iconBg} flex items-center justify-center">
+                            <i data-feather="${room.icon}" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="font-medium">${room.name}</h3>
+                            <p class="text-sm text-gray-500 dark:text-slate-400">${room.members}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-slate-400 text-sm mb-4">${room.desc}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${room.badgeBg} ${room.badgeText}">
+                            <i data-feather="${room.statusIcon}" class="w-3 h-3 mr-1"></i> ${room.status}
+                        </span>
+                        <button class="join-btn text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition">
+                            Join
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(roomDiv);
+            });
+            feather.replace();
+
+            // Add event listeners to all Join buttons
+            const joinButtons = grid.querySelectorAll('.join-btn');
+            joinButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.location.href = 'meet.html';
+                });
+            });
+        }
+
+        renderRooms();
+
+        // View All functionality
+        const viewAllBtn = document.getElementById('viewAllBtn');
+        viewAllBtn.addEventListener('click', () => {
+            if (!allRoomsShown) {
+                rooms = [...initialRooms, ...moreRooms];
+                allRoomsShown = true;
+                viewAllBtn.style.display = 'none';
+                renderRooms();
+            }
+        });
+
+        // Add new room after creation (this will show the room in Available Study Rooms)
+        createRoomForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.roomName.value.trim();
+            const desc = this.roomDesc.value.trim();
+            if (name) {
+                const newRoom = {
+                    name: name,
+                    members: "1 member · 1 active",
+                    desc: desc || "No description provided.",
+                    status: "Active",
+                    statusIcon: "users",
+                    badgeBg: "bg-green-100 dark:bg-green-900",
+                    badgeText: "text-green-800 dark:text-green-200",
+                    icon: "users",
+                    iconBg: "bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300"
+                };
+                // Always add to both initialRooms and rooms, then re-render
+                initialRooms.unshift(newRoom);
+                if (!allRoomsShown) {
+                    rooms = [...initialRooms];
+                } else {
+                    rooms.unshift(newRoom);
+                }
+                renderRooms();
+                createRoomModal.classList.add('hidden');
+                this.reset();
+            }
+        });
+
+        // "Invite" button: Show alert (since it would normally lead to another page)
+        const inviteBtn = document.querySelector('.room-members .text-sm.text-primary-600');
+        if (inviteBtn) {
+            inviteBtn.addEventListener('click', () => {
+                alert('Invite feature coming soon!');
+            });
+        }
+        
+        // "Share" button in motivational section: Show alert
+        const shareBtn = document.querySelector('.bg-white.bg-opacity-20.rounded-lg');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                alert('Share your streak soon!');
+            });
+        }
     </script>
 </body>
 </html>
