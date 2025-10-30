@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <meta charset="UTF-8">
     <title>EduSync Meet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,49 +56,28 @@
     </header>
 
     <!-- Video Grid -->
-    <main class="flex-1 flex flex-col items-center justify-center px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl mt-8">
-            <!-- Person 1 -->
-            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video1">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alex" class="video-avatar" id="avatar1">
-                <span class="video-name">Alex (You)</span>
-                <div class="absolute top-3 right-3 flex space-x-2">
-                    <button id="micBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="mic" class="w-5 h-5"></i>
-                    </button>
-                    <button id="camBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="video" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- Person 2 -->
-            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video2">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah" class="video-avatar" id="avatar2">
-                <span class="video-name">Sarah</span>
-                <div class="absolute top-3 right-3 flex space-x-2">
-                    <button id="micBtn2" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="mic" class="w-5 h-5"></i>
-                    </button>
-                    <button id="camBtn2" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="video" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- Person 3 -->
-            <div class="video-box h-64 flex flex-col items-center justify-center relative" id="video3">
-                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael" class="video-avatar" id="avatar3">
-                <span class="video-name">Michael</span>
-                <div class="absolute top-3 right-3 flex space-x-2">
-                    <button id="micBtn3" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="mic" class="w-5 h-5"></i>
-                    </button>
-                    <button id="camBtn3" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
-                        <i data-feather="video" class="w-5 h-5"></i>
-                    </button>
-                </div>
+    <main class="flex-1 flex flex-col items-center justify-center px-4 py-8">
+    <div id="video-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
+
+        <div class="video-box h-64 flex flex-col items-center justify-center relative" id="local-video-container">
+            <video id="local-video" autoplay playsinline muted class="w-full h-full object-cover" style="display: none;"></video>
+
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="You" class="video-avatar" id="local-avatar">
+
+            <span class="video-name">Alex (You)</span>
+
+            <div class="absolute top-3 right-3 flex space-x-2">
+                <button id="micBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                    <i data-feather="mic" class="w-5 h-5"></i>
+                </button>
+                <button id="camBtn1" class="p-2 rounded-full bg-gray-700 hover:bg-primary-500 transition">
+                    <i data-feather="video" class="w-5 h-5"></i>
+                </button>
             </div>
         </div>
-    </main>
+
+        </div>
+</main>
 
     <!-- Bottom Controls -->
     <footer class="flex items-center justify-center py-6 bg-gray-800">
@@ -105,73 +87,20 @@
         </button>
     </footer>
     <script>
-        feather.replace();
+    feather.replace();
 
-        // Leave button redirects to study-room.html
-        document.getElementById('leaveBtn').addEventListener('click', function() {
-            window.location.href = 'study-room.html';
-        });
-
-        // Mic and Cam toggle logic for each person
-        function setupControls(idx) {
-            const micBtn = document.getElementById(`micBtn${idx}`);
-            const camBtn = document.getElementById(`camBtn${idx}`);
-            const avatar = document.getElementById(`avatar${idx}`);
-            const videoBox = document.getElementById(`video${idx}`);
-
-            let micOn = true;
-            let camOn = true;
-
-            micBtn.addEventListener('click', () => {
-                micOn = !micOn;
-                micBtn.innerHTML = micOn
-                    ? '<i data-feather="mic" class="w-5 h-5"></i>'
-                    : '<i data-feather="mic-off" class="w-5 h-5 text-red-500"></i>';
-                feather.replace();
-            });
-
-            camBtn.addEventListener('click', () => {
-                camOn = !camOn;
-                camBtn.innerHTML = camOn
-                    ? '<i data-feather="video" class="w-5 h-5"></i>'
-                    : '<i data-feather="video-off" class="w-5 h-5 text-red-500"></i>';
-                feather.replace();
-                if (camOn) {
-                    avatar.style.display = '';
-                    videoBox.classList.remove('video-off');
-                    videoBox.innerHTML = `
-                        <img src="${avatar.src}" alt="" class="video-avatar" id="avatar${idx}">
-                        <span class="video-name">${videoBox.querySelector('.video-name').textContent}</span>
-                        <div class="absolute top-3 right-3 flex space-x-2">
-                            ${micBtn.outerHTML}
-                            ${camBtn.outerHTML}
-                        </div>
-                    `;
-                    feather.replace();
-                    setupControls(idx); // Re-attach events
-                } else {
-                    avatar.style.display = 'none';
-                    videoBox.classList.add('video-off');
-                    videoBox.innerHTML = `
-                        <div class="flex flex-col items-center justify-center h-full w-full">
-                            <i data-feather="video-off" class="w-12 h-12 mb-2 text-red-500"></i>
-                            <span class="text-lg">Camera Off</span>
-                        </div>
-                        <span class="video-name">${videoBox.querySelector('.video-name').textContent}</span>
-                        <div class="absolute top-3 right-3 flex space-x-2">
-                            ${micBtn.outerHTML}
-                            ${camBtn.outerHTML}
-                        </div>
-                    `;
-                    feather.replace();
-                    setupControls(idx); // Re-attach events
-                }
-            });
+    // Leave button redirects
+    document.getElementById('leaveBtn').addEventListener('click', function() {
+        // This 'handleLeave' function will be created in video.js
+        if (window.handleLeave) {
+            window.handleLeave();
         }
+        window.location.href = 'study-room.html';
+    });
 
-        setupControls(1);
-        setupControls(2);
-        setupControls(3);
-    </script>
+    // All the old setupControls() functions are GONE.
+    // video.js will handle this now.
+</script>
+<script src="video.js"></script>
 </body>
 </html>
