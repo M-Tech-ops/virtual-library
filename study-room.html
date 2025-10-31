@@ -588,7 +588,8 @@
                             <i data-feather="${room.statusIcon}" class="w-3 h-3 mr-1"></i> ${room.status}
                         </span>
                         <button class="join-btn text-sm px-3 py-1 bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition"
-                            onclick = "window.location.href='meet.html/?room=${room.name}'">Join
+                          data-room="${room.name}"
+                          >Join
                             
                         </button>
                     </div>
@@ -601,7 +602,8 @@
             const joinButtons = grid.querySelectorAll('.join-btn');
             joinButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    window.location.href = 'meet.html';
+                    const roomName= btn.dataset.room;
+                    window.location.href = `meet.html?room=${encodeURIComponent(initialRooms.name)}`;
                 });
             });
         }
